@@ -8,9 +8,6 @@ import { View, StyleSheet, Text, TouchableOpacity, SafeAreaView, Dimensions } fr
 const TicTacToe = () => {
     const [player, setPlayer] = useState('human');
     const [winner, setWinner] = useState('');
-    const [boardIsEmpty, setBoardIsEmpty] = useState(true);
-
-    // check board status for winner
 
     // toggle player on click
     const togglePlayerOnPress = () => {
@@ -25,6 +22,10 @@ const TicTacToe = () => {
     const resetBoard = () => {
         // 
     };
+
+    // check winLoseOrDraw()
+        // setWinner
+        // if: boardIsFull, setBoardIsFull,
 
 
     const renderNotificationText = () => {
@@ -44,10 +45,13 @@ const TicTacToe = () => {
         } else {
             switch (winner) {
                 case 'human':
-                    text = 'Your Won!!!';
+                    text = 'You Win!!!';
                     break;
                 case 'cpu':
                     text = 'You lose.';
+                    break;
+                case 'draw':
+                    text = 'Draw! Play again.';
                     break;
                 default:
                     break;
@@ -67,10 +71,10 @@ const TicTacToe = () => {
                 />
                 <View>{renderNotificationText()}</View>
 
-                {winner.length || boardIsEmpty &&
+                {winner.length ?
                     <TouchableOpacity style={styles.button} onPress={() => resetBoard()}>
                         <Text style={{ color: '#fff', textAlign: 'center', fontSize: 25 }}>Start Game</Text>
-                    </TouchableOpacity>}
+                    </TouchableOpacity> : null}
             </View>
         </SafeAreaView>
     );

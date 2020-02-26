@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { View, StyleSheet, Text, TouchableOpacity, Dimensions } from 'react-native';
 
-const Cell = ({ id, player, togglePlayer }) => {
+const Cell = ({ id, player, togglePlayer, winLoseOrDraw }) => {
     const [mark, setMark] = useState('');
 
     const handlePress = () => {
@@ -14,6 +14,7 @@ const Cell = ({ id, player, togglePlayer }) => {
             }
             togglePlayer();
         }
+        // check if winner
     };
 
     return (

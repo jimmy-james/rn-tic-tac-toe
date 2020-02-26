@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import Cell from './Cell';
 import { View, StyleSheet, FlatList, Dimensions } from 'react-native';
 
-const Board = ({ player, togglePlayer }) => {
+const Board = props => {
 
     const buildBoard = () => {
         const board = [];
 
         for (let i = 1; i <= 9; i++) {
-            board.push(<Cell id={`cell-${i}`} key={`cell-${i}`} player={player} togglePlayer={togglePlayer} />);
+            board.push(<Cell key={`cell-${i}`} {...props} />);
         }
 
         return board;
