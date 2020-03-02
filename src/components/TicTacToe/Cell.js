@@ -2,15 +2,22 @@ import React, { useState } from 'react';
 
 import { View, StyleSheet, Text, TouchableOpacity, Dimensions } from 'react-native';
 
-const Cell = ({ id, player, togglePlayer, winLoseOrDraw }) => {
+const Cell = ({ id, player, togglePlayer, cpuMoves, setCPUMoves, humanMoves, setHumanMoves }) => {
     const [mark, setMark] = useState('');
 
-    const handlePress = () => {
+    const handlePress = (e) => {
+        console.log(e)
         if (!mark.length) {
             if (player === 'human') {
                 setMark('X');
+                let arr = humanMoves;
+                arr[e] = e;
+                setHumanMoves(arr);
             } else {
                 setMark('O');
+                let arr = cpuMoves;
+                arr[e] = e;
+                setCPUMoves(arr);
             }
             togglePlayer();
         }
@@ -19,7 +26,7 @@ const Cell = ({ id, player, togglePlayer, winLoseOrDraw }) => {
 
     return (
         <View id={id} style={styles.root}>
-            <TouchableOpacity style={styles.button} onPress={() => handlePress()}>
+            <TouchableOpacity style={styles.button} onPress={() => handlePress(id)}>
                 <Text style={styles.text}>{mark}</Text>
             </TouchableOpacity>
         </View>

@@ -8,7 +8,7 @@ const Board = props => {
         const board = [];
 
         for (let i = 1; i <= 9; i++) {
-            board.push(<Cell key={`cell-${i}`} {...props} />);
+            board.push(<Cell key={`cell-${i}`} id={i} {...props} />);
         }
 
         return board;

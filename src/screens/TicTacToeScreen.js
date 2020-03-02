@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Board from '../components/TicTacToe/Board';
 
@@ -7,7 +7,24 @@ import { View, StyleSheet, Text, TouchableOpacity, SafeAreaView, Dimensions } fr
 
 const TicTacToe = () => {
     const [player, setPlayer] = useState('human');
+    const [humanMoves, setHumanMoves] = useState(new Array(10).fill(0));
+    const [cpuMoves, setCPUMoves] = useState(new Array(10).fill(0));
     const [winner, setWinner] = useState('');
+
+    const winningCombinations = [
+        [1, 4, 7],
+        [2, 5, 8],
+        [1, 2, 3],
+        [4, 5, 6],
+        [3, 6, 9],
+        [7, 8, 9],
+        [1, 5, 9],
+        [3, 5, 7]
+    ];
+
+    useEffect(() => {
+        
+    }, [setHumanMoves, setCPUMoves]);
 
     // toggle player on click
     const togglePlayerOnPress = () => {
@@ -16,6 +33,7 @@ const TicTacToe = () => {
         } else {
             setPlayer('human');
         }
+    checkWinLoseOrDraw();
     };
 
     // resetBoard
@@ -26,6 +44,26 @@ const TicTacToe = () => {
     // check winLoseOrDraw()
         // setWinner
         // if: boardIsFull, setBoardIsFull,
+
+    const checkWinLoseOrDraw = () => {
+        // 0,1,2,3,4,5,6,7,8
+        console.log("HUMAN ", humanMoves);
+        console.log("CPU MOVES ", cpuMoves)
+        for (let i = 0; i < winningCombinations.length; i++) {
+            first = winningCombinations[i][0];
+            second = winningCombinations[i][1];
+            third = winningCombinations[i][2];
+
+            for (let cpu = 0; cpu < cpuMoves.length; cpu++) {
+
+            }
+
+            for (let human = 0; human < humanMoves.length; human++) {
+
+            }
+        }
+        
+    };
 
 
     const renderNotificationText = () => {
@@ -68,6 +106,10 @@ const TicTacToe = () => {
                 <Board
                     player={player}
                     togglePlayer={togglePlayerOnPress}
+                    setHumanMoves={setHumanMoves}
+                    setCPUMoves={setCPUMoves}
+                    humanMoves={humanMoves}
+                    cpuMoves={cpuMoves}
                 />
                 <View>{renderNotificationText()}</View>
 
