@@ -46,20 +46,24 @@ const TicTacToe = () => {
         // if: boardIsFull, setBoardIsFull,
 
     const checkWinLoseOrDraw = () => {
-        // 0,1,2,3,4,5,6,7,8
-        console.log("HUMAN ", humanMoves);
-        console.log("CPU MOVES ", cpuMoves)
+        // lock press handlers on win, lose, or draw
         for (let i = 0; i < winningCombinations.length; i++) {
-            first = winningCombinations[i][0];
-            second = winningCombinations[i][1];
-            third = winningCombinations[i][2];
+            const first = winningCombinations[i][0];
+            const second = winningCombinations[i][1];
+            const third = winningCombinations[i][2];
 
             for (let cpu = 0; cpu < cpuMoves.length; cpu++) {
-
+                if (cpuMoves[first] === first && cpuMoves[second] === second && cpuMoves[third] === third) {
+                    console.log("CPU WINS!")
+                    break;
+                }
             }
 
             for (let human = 0; human < humanMoves.length; human++) {
-
+                if (humanMoves[first] === first && humanMoves[second] === second && humanMoves[third] === third) {
+                    console.log("HUMAN WINS!")
+                    break;
+                }
             }
         }
         
