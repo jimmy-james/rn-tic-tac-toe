@@ -1,32 +1,37 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { View, StyleSheet, Text, TouchableOpacity, Dimensions } from 'react-native';
 
-const Cell = ({ id, player, togglePlayer, cpuMoves, setCPUMoves, humanMoves, setHumanMoves }) => {
+const Cell = ({ id, player, togglePlayer, cpuMoves, setCPUMoves, humanMoves, setHumanMoves, winner, newGame }) => {
     const [mark, setMark] = useState('');
 
+    useEffect(() => {
+        if (newGame) {
+            setMark('');
+        }
+    }, [newGame]);
+
     const handlePress = (e) => {
-        console.log(e)
         if (!mark.length) {
             if (player === 'human') {
                 setMark('X');
-                let arr = humanMoves;
-                arr[e] = e;
-                setHumanMoves(arr);
+                let moves = humanMoves;
+                moves[e] = e;
+                setHumanMoves(moves);
             } else {
                 setMark('O');
-                let arr = cpuMoves;
-                arr[e] = e;
-                setCPUMoves(arr);
+                let moves = cpuMoves;
+                moves[e] = e;
+                setCPUMoves(moves);
             }
+
             togglePlayer();
         }
-        // check if winner
     };
 
     return (
         <View id={id} style={styles.root}>
-            <TouchableOpacity style={styles.button} onPress={() => handlePress(id)}>
+            <TouchableOpacity style={styles.button} onPress={() => handlePress(id)} disabled={winner.length > 0}>
                 <Text style={styles.text}>{mark}</Text>
             </TouchableOpacity>
         </View>

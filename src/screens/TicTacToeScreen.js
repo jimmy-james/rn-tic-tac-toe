@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react';
-
 import Board from '../components/TicTacToe/Board';
-
-import { View, StyleSheet, Text, TouchableOpacity, SafeAreaView, Dimensions } from 'react-native';
-
+import { View, StyleSheet, Text, TouchableOpacity, SafeAreaView } from 'react-native';
 
 const TicTacToe = () => {
     const [player, setPlayer] = useState('human');
     const [humanMoves, setHumanMoves] = useState(new Array(10).fill(0));
     const [cpuMoves, setCPUMoves] = useState(new Array(10).fill(0));
     const [winner, setWinner] = useState('');
+    const [newGame, setNewGame] = useState(false);
+
+    useEffect(() => {
+        setPlayer('human');
+        setNewGame(false);
+    }, [newGame]);
 
     const winningCombinations = [
         [1, 4, 7],
@@ -19,12 +22,8 @@ const TicTacToe = () => {
         [3, 6, 9],
         [7, 8, 9],
         [1, 5, 9],
-        [3, 5, 7]
+        [3, 5, 7],
     ];
-
-    useEffect(() => {
-        
-    }, [setHumanMoves, setCPUMoves]);
 
     // toggle player on click
     const togglePlayerOnPress = () => {
@@ -33,42 +32,54 @@ const TicTacToe = () => {
         } else {
             setPlayer('human');
         }
-    checkWinLoseOrDraw();
+
+        checkWinLoseOrDraw();
     };
 
     // resetBoard
     const resetBoard = () => {
-        // 
+        setWinner('');
+        setHumanMoves(new Array(10).fill(0));
+        setCPUMoves(new Array(10).fill(0));
+        setNewGame(true);
     };
 
-    // check winLoseOrDraw()
-        // setWinner
-        // if: boardIsFull, setBoardIsFull,
-
     const checkWinLoseOrDraw = () => {
+        let cpuMarks;
+        let humanMarks;
         // lock press handlers on win, lose, or draw
         for (let i = 0; i < winningCombinations.length; i++) {
             const first = winningCombinations[i][0];
             const second = winningCombinations[i][1];
             const third = winningCombinations[i][2];
+            cpuMarks = 0;
+            humanMarks = 0;
 
             for (let cpu = 0; cpu < cpuMoves.length; cpu++) {
                 if (cpuMoves[first] === first && cpuMoves[second] === second && cpuMoves[third] === third) {
-                    console.log("CPU WINS!")
-                    break;
+                    setWinner('cpu');
+                    return;
+                }
+                if (cpuMoves[cpu] !== 0) {
+                    cpuMarks++;
                 }
             }
 
             for (let human = 0; human < humanMoves.length; human++) {
                 if (humanMoves[first] === first && humanMoves[second] === second && humanMoves[third] === third) {
-                    console.log("HUMAN WINS!")
-                    break;
+                    setWinner('human');
+                    return;
+                }
+                if (humanMoves[human] !== 0) {
+                    humanMarks++;
                 }
             }
         }
-        
+console.log(cpuMarks, humanMarks)
+        if (cpuMarks + humanMarks === 9) {
+            setWinner('draw');
+        }
     };
-
 
     const renderNotificationText = () => {
         let text = '';
@@ -114,6 +125,8 @@ const TicTacToe = () => {
                     setCPUMoves={setCPUMoves}
                     humanMoves={humanMoves}
                     cpuMoves={cpuMoves}
+                    winner={winner}
+                    newGame={newGame}
                 />
                 <View>{renderNotificationText()}</View>
 

@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Cell from './Cell';
-import { View, StyleSheet, FlatList, Dimensions } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 
 const Board = props => {
 
