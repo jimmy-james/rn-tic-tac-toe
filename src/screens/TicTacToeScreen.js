@@ -75,7 +75,7 @@ const TicTacToe = () => {
                 }
             }
         }
-console.log(cpuMarks, humanMarks)
+
         if (cpuMarks + humanMarks === 9) {
             setWinner('draw');
         }
